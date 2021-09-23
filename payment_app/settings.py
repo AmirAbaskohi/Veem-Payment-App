@@ -25,7 +25,7 @@ SECRET_KEY = '6edmnk@dhp=a+4q1j04a99yw3hsd40%u5i(zzn6fb$j3863(yk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://veem-p2p-payment.herokuapp.com/', '127.0.0.1']
+ALLOWED_HOSTS = ['veem-p2p-payment.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
