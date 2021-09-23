@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box;}
+
+body { 
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 20px 10px;
+}
+
+.alert {
+  overflow: hidden;
+  background-color: #f8ff22;
+  padding: 20px 10px;
+  padding-left: 40px;
+}
+
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color: #f1f1f1;
+}
+
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.header a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.header-right {
+  float: right;
+}
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .header-right {
+    float: none;
+  }
+}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  padding-left: 100px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-right: 100px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="#default" class="logo">Payment App</a>
+</div>
+
+{% if hasAlert %}
+<div class="alert">
+<b>{{ alert }}</b>
+</div>
+{% endif %}
+
+<div style="padding-left:100px">
+  <h1>Welcome to Peer2Peer Payment app using Veem API.</h1>
+  <p>Use below forms to do you payments.</p>
+</div>
+
+<hr />
+
+<h3 style="padding-left: 100px;">Send Money Form</h3>
+
+<div class="container">
+    <form action="/sendReq/" method="post"> {% csrf_token %}
+      <label for="fname">First Name</label>
+      <input type="text" id="fname" name="firstname" placeholder="Your name...">
+  
+      <label for="lname">Last Name</label>
+      <input type="text" id="lname" name="lastname" placeholder="Your last name...">
+  
+      <label for="email">Email</label>
+      <input type="text" id="email" name="email" placeholder="Your email...">
+  
+      <label for="countrycode">County Code</label>
+      <input type="text" id="countrycode" name="countrycode" placeholder="Your country code...">
+  
+      <label for="phonecountrycode">Phone Country Code</label>
+      <input type="text" id="phonecountrycode" name="phonecountrycode" placeholder="Your phone country code...">
+  
+      <label for="countrycode">County Code</label>
+      <input type="text" id="countrycode" name="countrycode" placeholder="Your country code...">
+  
+      <label for="businessname">Business Name</label>
+      <input type="text" id="businessname" name="businessname" placeholder="Your business name...">
+  
+      <label for="phone">Phone</label>
+      <input type="text" id="phone" name="phone" placeholder="Your phone...">
+  
+      <label for="amount">Amount</label>
+      <input type="text" id="amount" name="amount" placeholder="Amount...">
+  
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+<hr />
+
+<h3 style="padding-left: 100px;">Invoice Form</h3>
+
+<div class="container">
+    <form action="/invoiceReq/" method="post"> {% csrf_token %}
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name...">
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name...">
+
+    <label for="email">Email</label>
+    <input type="text" id="email" name="email" placeholder="Your email...">
+
+    <label for="countrycode">County Code</label>
+    <input type="text" id="countrycode" name="countrycode" placeholder="Your country code...">
+
+    <label for="phonecountrycode">Phone Country Code</label>
+    <input type="text" id="phonecountrycode" name="phonecountrycode" placeholder="Your phone country code...">
+
+    <label for="countrycode">County Code</label>
+    <input type="text" id="countrycode" name="countrycode" placeholder="Your country code...">
+
+    <label for="businessname">Business Name</label>
+    <input type="text" id="businessname" name="businessname" placeholder="Your business name...">
+
+    <label for="phone">Phone</label>
+    <input type="text" id="phone" name="phone" placeholder="Your phone...">
+
+    <label for="amount">Amount</label>
+    <input type="text" id="amount" name="amount" placeholder="Amount...">
+
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+<hr />
+
+<h3 style="padding-left: 100px;">RequestFx Form</h3>
+
+<div class="container">
+    <form action="/requestFxReq/" method="post"> {% csrf_token %}
+      <label for="fromAmount">From Amount</label>
+      <input type="text" id="fromAmount" name="fromAmount" placeholder="From Amount...">
+  
+      <label for="fromCurrency">From Currency</label>
+      <input type="text" id="fromCurrency" name="fromCurrency" placeholder="From Currency...">
+  
+      <label for="fromCountry">From Country</label>
+      <input type="text" id="fromCountry" name="fromCountry" placeholder="From Country...">
+  
+      <label for="toCurrency">To Currency</label>
+      <input type="text" id="toCurrency" name="toCurrency" placeholder="To Currency...">
+  
+      <label for="toCountry">To Country</label>
+      <input type="text" id="toCountry" name="toCountry" placeholder="To Country...">
+  
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+<footer>
+    <p>Author: Hege Refsnes<br>
+    <a href="mailto:amirhossein.abaskohi@gmail.com">amirhossein.abaskohi@example.com</a></p>
+</footer>
+
+</body>
+</html>
