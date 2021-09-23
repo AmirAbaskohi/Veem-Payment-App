@@ -1,1 +1,1 @@
-web: waitress-serve --listen=*:44303 payment_app.wsgi:application
+web: waitress-serve --listen=*:$PORT payment_app.wsgi:application
