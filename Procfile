@@ -1,0 +1,1 @@
+web: waitress-serve --listen=*:8000 payment_app.wsgi:application
