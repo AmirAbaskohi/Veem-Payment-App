@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <th>Country</th>
+                <th>Country Abbriviation</th>
+                <th>Valid Currencies</th>
+            </tr>
+            {% for currency in currencies %}
+                <tr>
+                    <td>{{ currency.countryName }}</td>
+                    <td>{{ currency.country }}</td>
+                    <td>
+                        {% for receivingCurrency in currency.receivingCurrencies %}
+                            {{ receivingCurrency }}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

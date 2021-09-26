@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .utils import *
+import requests
+import json
 
 def paymentView(request):
     hasAlert = False
@@ -9,7 +11,26 @@ def paymentView(request):
         alert = request.GET["alert"]
         hasAlert = True
 
-    return render(request, 'payment.html', {'hasAlert': hasAlert, 'alert': alert})
+    url = "https://sandbox-api.veem.com/veem/public/v1.1/country-currency-map"
+    querystring = {"bankFields":"false"}
+    headers = {"Accept": "application/json"}
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    currencies = json.loads(response.text)
+
+    curr = set()
+    for currency in currencies:
+        for receivingCurrency in currency['receivingCurrencies']:
+            curr.add(receivingCurrency)
+
+    return render(request, 'payment.html', {'hasAlert': hasAlert, 'alert': alert, 'currencies': currencies, 'currs': curr})
+
+def currenciesView(request):
+    url = "https://sandbox-api.veem.com/veem/public/v1.1/country-currency-map"
+    querystring = {"bankFields":"false"}
+    headers = {"Accept": "application/json"}
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    currencies = json.loads(response.text)
+    return render(request, 'currencies.html', {'currencies': currencies})
 
 def sendMoneyView(request):
     email = request.POST['email']
@@ -19,7 +40,11 @@ def sendMoneyView(request):
     countrycode = request.POST['countrycode']
     phoneCountryCode = request.POST['phonecountrycode']
     phone = request.POST['phone']
-    amount = request.POST['amount']
+    amount = 0.0
+    try:
+        amount = float(request.POST['amount'])
+    except:
+        return HttpResponseRedirect('/?alert=Invalid amount')
 
     if email == "" or firstname == "" or lastname == "" or businessname == "" or countrycode == "" or phoneCountryCode == "" or phone == "" or amount == "":
         return HttpResponseRedirect('/?alert=Invalid parameters')
@@ -38,7 +63,10 @@ def invoiceView(request):
     countrycode = request.POST['countrycode']
     phoneCountryCode = request.POST['phonecountrycode']
     phone = request.POST['phone']
-    amount = request.POST['amount']
+    try:
+        amount = float(request.POST['amount'])
+    except:
+        return HttpResponseRedirect('/?alert=Invalid amount')
 
     if email == "" or firstname == "" or lastname == "" or businessname == "" or countrycode == "" or phoneCountryCode == "" or phone == "" or amount == "":
         return HttpResponseRedirect('/?alert=Invalid parameters')

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from payment.views import paymentView, sendMoneyView, requestFxView, invoiceView
+from payment.views import paymentView, sendMoneyView, requestFxView, invoiceView, currenciesView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +23,5 @@ urlpatterns = [
     path('sendReq/', sendMoneyView),
     path('invoiceReq/', invoiceView),
     path('requestFxReq/', requestFxView),
+    path('currencies/', currenciesView)
 ]

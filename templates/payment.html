@@ -102,6 +102,21 @@ input[type=submit]:hover {
   padding-bottom: 30px;
   padding-right: 100px;
 }
+.button:link, .button:visited {
+  background-color: white;
+  color: black;
+  border: 2px solid green;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.button:hover, .button:active {
+  background-color: green;
+  color: white;
+}
+
 </style>
 </head>
 <body>
@@ -121,9 +136,18 @@ input[type=submit]:hover {
   <p>Use below forms to do you payments.</p>
 </div>
 
+<h3 style="padding-left:100px">Valid currencies</h3>
+<p style="padding-left:100px">Using below link you can see each country supported by the system and their valid currencies.</p>
+<br style="padding-left:100px">
+<a href="/currencies" class="button" style="margin-left: 100px;">Get Currencies</a>
+
+<br />
+<br />
 <hr />
 
 <h3 style="padding-left: 100px;">Send Money Form</h3>
+<p style="padding-left: 100px;">You can send money using this form.</p>
+<p style="padding-left: 100px;"><b>Important</b>: amount is in US Dollar</p>
 
 <div class="container">
     <form action="/sendReq/" method="post"> {% csrf_token %}
@@ -161,6 +185,8 @@ input[type=submit]:hover {
 <hr />
 
 <h3 style="padding-left: 100px;">Invoice Form</h3>
+<p style="padding-left: 100px;">This form will posts an invoice and sends to receiver.</p>
+<p style="padding-left: 100px;"><b>Important</b>: amount is in US Dollar</p>
 
 <div class="container">
     <form action="/invoiceReq/" method="post"> {% csrf_token %}
@@ -197,31 +223,53 @@ input[type=submit]:hover {
 
 <hr />
 
-<h3 style="padding-left: 100px;">RequestFx Form</h3>
+<h3 style="padding-left: 100px;">Exchange request Form</h3>
+<p style="padding-left: 100px;">This form will submit a request to generate an exchange rate quote</p>
+<p style="padding-left: 100px;">From Amount: The source amount</p>
+<p style="padding-left: 100px;">From Country: Is the source country</p>
+<p style="padding-left: 100px;">From Currency: Is the source currency</p>
+<p style="padding-left: 100px;">To Country: Is the final country</p>
+<p style="padding-left: 100px;">To Currency: Is the final currency</p>
 
 <div class="container">
     <form action="/requestFxReq/" method="post"> {% csrf_token %}
       <label for="fromAmount">From Amount</label>
       <input type="text" id="fromAmount" name="fromAmount" placeholder="From Amount...">
   
-      <label for="fromCurrency">From Currency</label>
-      <input type="text" id="fromCurrency" name="fromCurrency" placeholder="From Currency...">
-  
       <label for="fromCountry">From Country</label>
-      <input type="text" id="fromCountry" name="fromCountry" placeholder="From Country...">
+      <select id="fromCountry" name="fromCountry">
+        {% for currency in currencies %}
+        <option value="{{ currency.country }}">{{ currency.countryName }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="fromCurrency">From Currency</label>
+      <select id="fromCurrency" name="fromCurrency">
+        {% for curr in currs %}
+        <option value="{{ curr }}">{{ curr }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="toCountry">To Country</label>
+      <select id="toCountry" name="toCountry">
+        {% for currency in currencies %}
+        <option value="{{ currency.country }}">{{ currency.countryName }}</option>
+        {% endfor %}
+      </select>
   
       <label for="toCurrency">To Currency</label>
-      <input type="text" id="toCurrency" name="toCurrency" placeholder="To Currency...">
-  
-      <label for="toCountry">To Country</label>
-      <input type="text" id="toCountry" name="toCountry" placeholder="To Country...">
+      <select id="toCurrency" name="toCurrency">
+        {% for curr in currs %}
+        <option value="{{ curr }}">{{ curr }}</option>
+        {% endfor %}
+      </select>
   
       <input type="submit" value="Submit">
     </form>
   </div>
 
 <footer>
-    <p>Author: Hege Refsnes<br>
+    <p>Author:Amrhossein Abaskohi<br>
     <a href="mailto:amirhossein.abaskohi@gmail.com">amirhossein.abaskohi@example.com</a></p>
 </footer>
 
